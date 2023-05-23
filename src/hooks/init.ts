@@ -31,15 +31,6 @@ const initFun = (THREE: typeof import("three")) => {
   // 将webgl渲染的canvas内容添加到body上
   document.body.appendChild(renderer.domElement)
 
-  // 设置渲染函数
-  const render = () => {
-    // 渲染场景
-    renderer.render(scene, camera);
-    // 引擎自动更新渲染器
-    requestAnimationFrame(render);
-  }
-  render()
-
   // 实例化控制器
   const controls = new OrbitControls(camera, renderer.domElement)
   controls.enableDamping = true
@@ -48,10 +39,13 @@ const initFun = (THREE: typeof import("three")) => {
   const ambient = new THREE.AmbientLight(0xffffff, 0.85)
   scene.add(ambient)
 
+  // 雾化效果
+  // scene.fog = new THREE.Fog(0xdddddd, 100, 120);
+
   return {
     scene,
     renderer,
-    render
+    camera
   }
 }
 

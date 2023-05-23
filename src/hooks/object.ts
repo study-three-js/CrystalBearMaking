@@ -20,18 +20,44 @@ const objectFun = (THREE: typeof import("three"), scene: Scene, bgTexture: Textu
   })
 
   // 加载底盘
-  const geometry = new THREE.CircleGeometry(1, 32);
+  const circleGeometry = new THREE.CircleGeometry(1, 32);
   // 加载平面纹理
-  const texture = textureLoder.load('/src/assets/imgs/1.png')
-  const material = new THREE.MeshBasicMaterial({
-    map: texture,
+  const circleTexture = textureLoder.load('/src/assets/imgs/1.png')
+  const circleMaterial = new THREE.MeshBasicMaterial({
+    map: circleTexture,
     side: THREE.DoubleSide,
     // 设置透明
     transparent: true
   });
-  const plane = new THREE.Mesh(geometry, material);
+  const plane = new THREE.Mesh(circleGeometry, circleMaterial);
   plane.rotation.x = -Math.PI / 2
   scene.add(plane);
+
+
+
+  // 加载一个圆柱，形成光束
+  const cylinderGeometry = new THREE.CylinderGeometry(1, 1, 20, 32, 1, true, 0, Math.PI * 2);
+  const cylinderTexture = textureLoder.load('/src/assets/imgs/n7.png')
+  cylinderTexture.rotation = - Math.PI / 4
+  cylinderTexture.center.set(0.5, 0.5)
+  const cylinderMaterial = new THREE.MeshStandardMaterial({
+    map: cylinderTexture,
+    side: THREE.DoubleSide,
+    // 设置透明
+    transparent: true,
+  });
+  const cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+  scene.add(cylinder);
+
+
+  const objectRender = () => {
+    plane && (plane.rotation.z += .01);
+    cylinder && (cylinder.rotation.y += .01);
+  }
+
+  return {
+    objectRender
+  }
 }
 
 export default objectFun
