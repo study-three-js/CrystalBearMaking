@@ -14,6 +14,8 @@ const objectFun = (THREE: typeof import("three"), scene: Scene, bgTexture: Textu
       reflectivity: 0.99,
       opacity: 0.5
     })
+    // 将物体的scale属性设置为两倍
+    model.scale.set(2, 2, 2)
     scene.add(model)
   })
 
@@ -21,7 +23,12 @@ const objectFun = (THREE: typeof import("three"), scene: Scene, bgTexture: Textu
   const geometry = new THREE.CircleGeometry(1, 32);
   // 加载平面纹理
   const texture = textureLoder.load('/src/assets/imgs/1.png')
-  const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+  const material = new THREE.MeshBasicMaterial({
+    map: texture,
+    side: THREE.DoubleSide,
+    // 设置透明
+    transparent: true
+  });
   const plane = new THREE.Mesh(geometry, material);
   plane.rotation.x = -Math.PI / 2
   scene.add(plane);
